@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, Row } from "antd";
+import { Card } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -29,6 +29,8 @@ const Sprint = ({ children, title, id, onDelete }) => {
       },
     });
   };
+
+  
   return (
     <>
       <Card
@@ -41,7 +43,7 @@ const Sprint = ({ children, title, id, onDelete }) => {
           borderRadius: 15,
         }}
         actions={[
-          <Link>
+          <Link to={`/consultingSprint/${id}`}>
             <SearchOutlined key="search" />
           </Link>,
           <Link to={`/editSprint/${id}`}>
