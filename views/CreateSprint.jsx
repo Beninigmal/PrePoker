@@ -1,17 +1,14 @@
-import { Form, Input, Button, Select, Card, Space } from "antd";
+import { Form, Input, Button, Card, Space } from "antd";
 import React from "react";
 import {
-  createSprint,
-  deleteSprintById,
-  getSprintById,
-  updateSprint,
+  createSprint
+  
 } from "../service/firebaseService";
 
 const CreateSprint = ({ history }) => {
   const handleSprintFormFinish = (sprint) => {
     createSprint(sprint).then((resp) => history.push("/"));
-    // getSprintById("HUXf2Sp9WlAtl5tKLa9M").then((resp) => console.log(resp));
-  };
+      };
 
   return (
     <Space

@@ -4,7 +4,7 @@ import Sprint from "../component/Sprint";
 import { useSprints } from "../service/Hooks/useSprints";
 
 const Home = () => {
-  const [sprints, setOutdated] = useSprints();
+  const [sprints, loading, setOutdated] = useSprints();
   return (
     <Space
       direction="horizontal"
@@ -14,7 +14,7 @@ const Home = () => {
     >
       {sprints.map(({ devs, days, name, id }) => {
         return (
-          <Sprint title={name} id={id} onDelete={() => setOutdated(true)}>
+          <Sprint title={name} id={id} key={id} onDelete={() => setOutdated(true)}>
             <h2>Desenvolvedores: {devs}</h2>
             <h2>Dias: {days}</h2>
           </Sprint>
