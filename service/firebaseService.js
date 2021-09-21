@@ -38,9 +38,9 @@ export const createSprint = (sprint) => {
   return addDoc(sprintCollection, sprint);
 };
 
+
 export const updateSprint = (sprint) => {
-  console.log(sprint);
-  return setDoc(doc(db, "sprints", sprint.id), sprint);
+    return setDoc(doc(db, "sprints", sprint.id), sprint);
 };
 
 export const deleteSprintById = (id) => {
