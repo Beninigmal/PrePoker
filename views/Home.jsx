@@ -1,10 +1,10 @@
 import { Space } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Sprint from "../component/Sprint";
 import { useSprints } from "../service/Hooks/useSprints";
 
 const Home = () => {
-  const [sprints, loading, setOutdated] = useSprints();
+  const [sprints, setOutdated] = useSprints();
   return (
     <Space
       direction="horizontal"
@@ -20,7 +20,7 @@ const Home = () => {
           </Sprint>
         );
       })}
-    </Space>
+    </Space> 
   );
 };
 

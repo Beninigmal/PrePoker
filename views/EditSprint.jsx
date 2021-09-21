@@ -19,7 +19,7 @@ const EditSprint = ({ history }) => {
     getSprintById(id).then((resp) => {
       form.setFieldsValue(resp);
     });
-  }, []);
+  }, [form, id]);
 
   return (
     <Space
