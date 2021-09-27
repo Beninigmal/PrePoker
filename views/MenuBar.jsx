@@ -26,7 +26,7 @@ const MenuBar = () => {
       Lista de Sprints
     </Title>}
       <Button
-        // style={{ position: "relative", top: "-3px" }}
+        
         icon={
           pathname === "/" ? (
             <Link to="/CreateSprint">

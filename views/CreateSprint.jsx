@@ -1,14 +1,20 @@
-import { Form, Input, Button, Card, Space } from "antd";
+import { Form, Input, Button, Card, Space, notification } from "antd";
 import React from "react";
-import {
-  createSprint
-  
-} from "../service/firebaseService";
+import { createSprint } from "../service/firebaseService";
 
 const CreateSprint = ({ history }) => {
+  const openNotificationWithIcon = (type, message) => {
+    notification[type]({
+      description: message,
+      style: { borderRadius: "10px" },
+    });
+  };
   const handleSprintFormFinish = (sprint) => {
-    createSprint(sprint).then((resp) => history.push("/"));
-      };
+    createSprint(sprint)
+      .then((resp) => history.push("/"))
+      .then(() => openNotificationWithIcon("success", "Sprint criada com sucesso!"))
+      .catch(() => openNotificationWithIcon("error", "Erro ao criar a sprint!"));
+  };
 
   return (
     <Space
@@ -56,6 +62,7 @@ const CreateSprint = ({ history }) => {
             label="Sprint"
             name="name"
             rules={[{ required: true, message: "Campo Obrigatório" }]}
+            
           >
             <Input placeholder="Sprint XX" />
           </Form.Item>
