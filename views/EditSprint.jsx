@@ -1,4 +1,4 @@
-import { Button, Card, Input, Space, Form, notification } from "antd";
+import { Button, Card, Input, Space, Form } from "antd";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { getSprintById, updateSprint } from "../service/firebaseService";
@@ -11,20 +11,12 @@ const EditSprint = ({ history }) => {
   const handleEditSprint = (sprint) => {
     const spt = { id, ...sprint };
     updateSprint(spt)
-      .then(() => history.push("/")).then(() => openNotificationWithIcon("success", "Sprint alterada com sucesso!"))
-      .catch((error) => openNotificationWithIcon("error", "Não foi possível alterar essa sprint!"));
-  };
-
-  const openNotificationWithIcon = (type, message) => {
-    notification[type]({
-      description: message,
-      style: { borderRadius: "10px" },
-    });
+      .then(() => history.push("/"))
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
     getSprintById(id).then((resp) => {
-      console.log(resp);
       form.setFieldsValue(resp);
     });
   }, [form, id]);

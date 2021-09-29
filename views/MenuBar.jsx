@@ -1,32 +1,39 @@
-import { Button, Typography } from "antd";
+import { Button, Menu, Space, Typography } from "antd";
 import { PlusOutlined, HomeOutlined } from "@ant-design/icons";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { getSprintById } from "../service/firebaseService";
 
 const MenuBar = () => {
   const { pathname } = useLocation();
   const { Title } = Typography;
 
   return (
-     <div
+    // <Menu
+    //   theme="light"
+    //   mode="horizontal"
+    //   style={{
+    //
+    //   }}
+    // >
+    <div
       style={{
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: pathname !== "/" ? "space-between" : "flex-end",
         alignItems: "center",
         width: "100%",
         padding: "0px 10px",
+        margin: "0px 0",
         borderBottom: "1px solid #f1f1f1",
       }}
     >
-      {pathname !== "/" ? (
+      {pathname !== "/" && (
         <Title level={2} style={{ margin: 0 }}>
           Nome da Sprint
         </Title>
-      ) :  <Title level={2} style={{ margin: 0 }}>
-      Lista de Sprints
-    </Title>}
+      )}
       <Button
-        
+        style={{ position: "relative", top: "-3px" }}
         icon={
           pathname === "/" ? (
             <Link to="/CreateSprint">
@@ -41,7 +48,7 @@ const MenuBar = () => {
         type="primary"
       />
     </div>
- 
+    // </Menu>
   );
 };
 
