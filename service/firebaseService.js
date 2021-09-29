@@ -1,24 +1,21 @@
-import {
-  collection,
-  getDocs,
-  addDoc,
-  doc,
-  setDoc,
-  deleteDoc,
-  getDoc,
-} from "firebase/firestore/lite";
 import { db } from "../utils/firebaseUtils";
 
 const DEFAULT_SPRINT = {
   name: "",
   days: 10.5,
   devs: 0,
+  cards: 0,
+};
+const DEFAULT_CARD = {
+  number: 0,
+  cards: 0,
 };
 
+//Sprints
+
 export const getSprints = async () => {
-  const sprintCollection = collection(db, "sprints");
-  const sprintSnapshot = await getDocs(sprintCollection);
-  return sprintSnapshot.docs.map((doc) => ({
+  const snapshot = await db.collection("sprints").get();
+  return snapshot.docs.map((doc) => ({
     ...DEFAULT_SPRINT,
     ...doc.data(),
     id: doc.id,
@@ -26,23 +23,42 @@ export const getSprints = async () => {
 };
 
 export const getSprintById = (id) => {
-  return getDoc(doc(db, "sprints", id)).then((resp) => ({
-    ...DEFAULT_SPRINT,
-    ...resp.data(),
-    id,
-  }));
+  return db
+    .collection("sprints")
+    .doc(id)
+    .get()
+    .then((resp) => ({
+      ...DEFAULT_SPRINT,
+      ...resp.data(),
+      id,
+    }));
 };
 
 export const createSprint = (sprint) => {
-  const sprintCollection = collection(db, "sprints");
-  return addDoc(sprintCollection, sprint);
+  return db.collection("sprints").add(sprint);
 };
 
-
 export const updateSprint = (sprint) => {
-    return setDoc(doc(db, "sprints", sprint.id), sprint);
+  return db.collection("sprints").doc(sprint.id).update(sprint);
 };
 
 export const deleteSprintById = (id) => {
-  return deleteDoc(doc(db, "sprints", id));
+  return db.collection("sprints").doc(id).delete();
+};
+
+// History Cards
+export const createCard = (sprintId, card) => {
+  return db.collection(`sprints/${sprintId}/cards`).add(card);
+};
+
+export const getCards = async (id) => {
+  const cards = await db
+    .collection(`sprints`)
+    .doc(id)
+    .collection(`cards`)
+    .get();
+  return cards.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 };
