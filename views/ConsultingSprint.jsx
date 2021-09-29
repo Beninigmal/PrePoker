@@ -1,20 +1,23 @@
-import { Button, Card, Input, Space, Form } from 'antd'
+import { Button, Card, Input, Space, Form } from "antd";
 
-import React, { useEffect } from 'react'
-import { useParams } from 'react-router'
-import { getSprintById } from '../service/firebaseService'
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import TableSprint from "../component/TableSprint";
+import { getCards, getSprintById } from "../service/firebaseService";
 
-const ConsultingSprint = ({history}) => {
+const ConsultingSprint = ({ history }) => {
+  const { id } = useParams();
+  const [form] = Form.useForm();
+  const [data, setData] = useState([]);
 
-    const {id} = useParams()
-    const [form] = Form.useForm()
+  useEffect(() => {
+    getSprintById(id).then((resp) => form.setFieldsValue(resp));
+    getCards(id).then((resp) => setData(resp));
+  }, [id, form]);
 
-    useEffect(() => {
-        getSprintById(id).then((resp) => form.setFieldsValue(resp))
-    }, [id, form])
-    
-    return (
-        <Space
+  return (
+    <>
+      <Space
         align="start"
         style={{
           display: "flex",
@@ -30,7 +33,7 @@ const ConsultingSprint = ({history}) => {
           }}
           wrapperCol={{
             span: 18,
-          }}  
+          }}
         >
           <Card
             title="Consultar uma Sprint"
@@ -60,26 +63,30 @@ const ConsultingSprint = ({history}) => {
               name="name"
               rules={[{ required: true, message: "Campo Obrigatório" }]}
             >
-              <Input placeholder="Sprint XX" disabled/>
+              <Input placeholder="Sprint XX" disabled />
             </Form.Item>
             <Form.Item
               label="Dias"
               name="days"
               rules={[{ required: true, message: "Campo Obrigatório" }]}
             >
-              <Input placeholder="Dias de execução" disabled/>
+              <Input placeholder="Dias de execução" disabled />
             </Form.Item>
             <Form.Item
               label="Devs"
               name="devs"
               rules={[{ required: true, message: "Campo Obrigatório" }]}
             >
-              <Input placeholder="Sprint XX" disabled/>
+              <Input placeholder="Sprint XX" disabled />
             </Form.Item>
           </Card>
         </Form>
       </Space>
-    )
-}
+      <Card>
+        <TableSprint cardList={data} />
+      </Card>
+    </>
+  );
+};
 
-export default ConsultingSprint
+export default ConsultingSprint;

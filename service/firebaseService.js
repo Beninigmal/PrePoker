@@ -6,6 +6,10 @@ const DEFAULT_SPRINT = {
   devs: 0,
   cards: 0,
 };
+const DEFAULT_CARD = {
+  number: 0,
+  cards: 0,
+};
 
 //Sprints
 
@@ -45,4 +49,16 @@ export const deleteSprintById = (id) => {
 // History Cards
 export const createCard = (sprintId, card) => {
   return db.collection(`sprints/${sprintId}/cards`).add(card);
+};
+
+export const getCards = async (id) => {
+  const cards = await db
+    .collection(`sprints`)
+    .doc(id)
+    .collection(`cards`)
+    .get();
+  return cards.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 };

@@ -6,7 +6,6 @@ import { useSprints } from "../service/Hooks/useSprints";
 const Home = () => {
   const [sprints, loading, setOutdated] = useSprints();
 
-  console.log(sprints);
   return (
     <div
       style={{
